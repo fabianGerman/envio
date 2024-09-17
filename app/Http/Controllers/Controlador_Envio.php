@@ -35,6 +35,14 @@ class Controlador_Envio extends Controller
                 'envios.env_prestacion as PRESTACION',
                 'envios.env_documentO as DOCUMENTACION'
             )
+            ->groupBy(
+                'afiliados.af_nombres',
+                'prestadors.prest_nombre',
+                'obra_socials.os_nombre',
+                'envios.env_periodo',
+                'envios.env_prestacion',
+                'envios.env_documento'
+            )
             ->get();
         
         return view('envios.lista',['envios' => $envios]);

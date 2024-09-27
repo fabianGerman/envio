@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAfiliadosTable extends Migration
+class AddNumeroToObraSocialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateAfiliadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('afiliados', function (Blueprint $table) {
-            $table->id();
-            $table->string('af_numero')->nullable();
-            $table->string('af_cuil')->nullable();
-            $table->string('af_nombres')->nullable();
-            $table->timestamps();
+        Schema::table('obra_socials', function (Blueprint $table) {
+            $table->integer('os_numero')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateAfiliadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('afiliados');
+        Schema::table('obra_socials', function (Blueprint $table) {
+            $table->dropColumn('os_numero');
+        });
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAfiliadosTable extends Migration
+class CreateAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateAfiliadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('afiliados', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->string('af_numero')->nullable();
-            $table->string('af_cuil')->nullable();
-            $table->string('af_nombres')->nullable();
+            $table->string('area_nombre')->nullable();
+            $table->string('area_cuit')->nullable();
+            $table->string('area_domicilio')->nullable();
+            $table->string('area_telefono')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateAfiliadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('afiliados');
+        Schema::dropIfExists('areas');
     }
 }

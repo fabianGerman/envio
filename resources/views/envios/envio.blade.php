@@ -49,6 +49,10 @@
                             <x-jet-input id="afiliado" class="block mt-1 w-full" type="text" name="afiliado" :value="old('afiliado')" required autofocus autocomplete="phone"/>
                         </div>
                         <div class="flex items-center justify-end mt-4">
+                            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('archivo.back') }}">
+                                {{ __('Cancelar') }}
+                            </a>
+
                             <x-jet-button class="ml-4">
                                 {{ __('ENVIAR') }}
                             </x-jet-button>

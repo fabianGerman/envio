@@ -171,15 +171,10 @@ class Envio extends Model
 
     public static function filtros_envio($prestador,$prestacion,$afiliado,$periodo,$obrasocial,$usuario){
 
-        // Realiza las búsquedas iniciales
-    $buscar_prestador = Prestador::where('prest_matricula', intval($prestador))->first();
-    $buscar_afiliado = Afiliado::where('af_nombres', $afiliado)->first();
-    $buscar_obrasocial = ObraSocial::where('os_siglas', $obrasocial)->first();
-    $buscar_usuario = User::where('name',$usuario)->first();
-    //dump($prestador,$prestacion,$afiliado,$periodo,$obrasocial,$usuario);
-    //dd($buscar_prestador,$buscar_afiliado,$buscar_obrasocial);
-    // Inicia la consulta base
-
+        $buscar_prestador = Prestador::where('prest_matricula', intval($prestador))->first();
+        $buscar_afiliado = Afiliado::where('af_nombres', $afiliado)->first();
+        $buscar_obrasocial = ObraSocial::where('os_siglas', $obrasocial)->first();
+        $buscar_usuario = User::where('name',$usuario)->first();
         $lista = Envio::join('afiliados', 'afiliados.id', '=', 'envios.env_afiliado')
             ->join('prestadors', 'prestadors.id', '=', 'envios.env_prestador')
             ->join('obra_socials', 'obra_socials.id', '=', 'envios.env_obrasocial')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Envio;
 
 class Controlador_Archivo extends Controller
@@ -25,12 +26,14 @@ class Controlador_Archivo extends Controller
             
             return redirect()->route('archivo.listar');
         }else{
-            //dump($prestador,$prestacion,$afiliado,$periodo,$obrasocial,$usuario);
+            
             $lista = Envio::filtros_envio($prestador,$prestacion,$afiliado,$periodo,$obrasocial,$usuario);
             
             return view('archivos.listar',compact('lista'));
         }
-        
-        
+    }
+
+    public function back(){
+        return redirect()->route('archivo.listar');
     }
 }

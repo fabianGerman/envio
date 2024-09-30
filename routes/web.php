@@ -137,4 +137,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/archivo/listar',[Controlador_Archivo::class,'list'])->name('archivo.listar');
 
     Route::post('/archivo/filtro',[Controlador_Archivo::class,'filtro'])->name('archivo.filtro');
+    
+    Route::get('/archivo/back',[Controlador_Archivo::class,'back'])->name('archivo.back');
 });

@@ -1,10 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <a href="#">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('AGREGAR') }}
-            </h2>
-        </a>
+        <div class="flex justify-between items-center">
+            <a href="{{ route('envio.index') }}">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('AGREGAR') }}
+                </h2>
+            </a>
+            <a href="#">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('EXPORTAR') }}
+                </h2>
+            </a>
+        </div>
+        
     </x-slot>
 
     <div class="pt-4 pb-4">
@@ -64,17 +72,7 @@
                 <h1 class="text-center"><strong>LISTA DE ARCHIVOS</strong> </h1>
 
                 <br><br>
-                <!--
-                <form method="POST" class="flex items-center justify-end my-3" role="search" action="#">
-                    @csrf
-                    
-                    <x-jet-input id="search" class="block w-1/2" type="text" name="search" autofocus autocomplete="name" />
-                    <x-jet-button class="ml-2">
-                        {{ __('Buscar') }}
-                    </x-jet-button>
                 
-                </form>
-                    -->
                 <div style="overflow-x: auto;">
                     <table class="table-auto w-full text-center">
                         <thead>

@@ -99,7 +99,7 @@ class Controlador_Envio extends Controller
         $buscar_prestador = Prestador::where('prest_nombre',$prestador)->first();
         if($buscar_prestador == null){
             $prestador_agregar = new Prestador();
-            $prestador_agregar->prest_nombre = $prestador;
+            $prestador_agregar->prest_matricula = $prestador;
             $prestador_agregar->save();
         }
 

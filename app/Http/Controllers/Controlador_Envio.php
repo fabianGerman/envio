@@ -22,6 +22,7 @@ class Controlador_Envio extends Controller
 
     public function listar(){
 
+
         $usuario = Auth::id();
         $envios = Envio::where('envios.env_usuario',$usuario)
             ->join('afiliados','afiliados.id','=','envios.env_afiliado')

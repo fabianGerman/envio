@@ -29,6 +29,7 @@ class Envio extends Model
                 ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
                 ->join('users','users.id','=','envios.env_usuario')
                 ->select(
+                    'users.name as USUARIO',
                     'envios.created_at as FECHACREACION',
                     'envios.id',
                     'afiliados.af_nombres as AFILIADO',
@@ -47,6 +48,7 @@ class Envio extends Model
                     ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
                     ->join('users','users.id','=','envios.env_usuario')
                     ->select(
+                        'users.name as USUARIO',
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
@@ -64,6 +66,7 @@ class Envio extends Model
                     ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
                     ->join('users','users.id','=','envios.env_usuario')
                     ->select(
+                        'users.name as USUARIO',
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
@@ -118,6 +121,7 @@ class Envio extends Model
                 ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
                 ->join('users','users.id','=','envios.env_usuario')
                 ->select(
+                    'users.name as USUARIO',
                     'envios.created_at as FECHACREACION',
                     'envios.id',
                     'afiliados.af_nombres as AFILIADO',
@@ -136,6 +140,7 @@ class Envio extends Model
                     ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
                     ->join('users','users.id','=','envios.env_usuario')
                     ->select(
+                        'users.name as USUARIO',
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
@@ -153,6 +158,7 @@ class Envio extends Model
                     ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
                     ->join('users','users.id','=','envios.env_usuario')
                     ->select(
+                        'users.name as USUARIO',
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
@@ -173,13 +179,14 @@ class Envio extends Model
 
         $buscar_prestador = Prestador::where('prest_matricula', intval($prestador))->first();
         $buscar_afiliado = Afiliado::where('af_nombres', $afiliado)->first();
-        $buscar_obrasocial = ObraSocial::where('os_siglas', $obrasocial)->first();
+        $buscar_obrasocial = ObraSocial::where('os_nombre', $obrasocial)->first();
         $buscar_usuario = User::where('name',$usuario)->first();
         $lista = Envio::join('afiliados', 'afiliados.id', '=', 'envios.env_afiliado')
             ->join('prestadors', 'prestadors.id', '=', 'envios.env_prestador')
             ->join('obra_socials', 'obra_socials.id', '=', 'envios.env_obrasocial')
             ->join('users', 'users.id', '=', 'envios.env_usuario')
             ->select(
+                'users.name as USUARIO',
                 'envios.created_at as FECHACREACION',
                 'envios.id',
                 'afiliados.af_nombres as AFILIADO',

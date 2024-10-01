@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Rol extends Model
 {
@@ -15,11 +16,19 @@ class Rol extends Model
     ];
 
     public static function enumerar_roles(){
-        $result = Rol::select(
-                'id AS ID',
-                'rol_nombre AS ROL'
-            )
-            ->get();
+        if(Auth::user()->rol_usuario == 1){
+            $result = Rol::select(
+                    'id AS ID',
+                    'rol_nombre AS ROL'
+                )
+                ->get();
+        }else{
+            $result = Rol::whereNotIn('id',[1,2])
+                ->select('id AS ID',
+                        'rol_nombre AS ROL'
+                    )
+                ->get();
+        }
         return $result;
     }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Area extends Model
 {
@@ -17,11 +18,21 @@ class Area extends Model
     ];
 
     public static function enumerar_areas(){
-        $result = Area::select(
-            'id as ID',
-            'area_nombre AS NOMBRE'
-        )
-        ->get();
+        if(Auth::user()->rol_usuario == 1){
+            $result = Area::select(
+                    'id as ID',
+                    'area_nombre AS NOMBRE'
+                )
+                ->get();
+        }else{
+            $result = Area::where('id',Auth::user()->area_usuario)
+                ->select(
+                    'id as ID',
+                    'area_nombre AS NOMBRE'
+                )
+                ->get();
+        }
+        
         return $result;
     }
     public static function listar_areas(){

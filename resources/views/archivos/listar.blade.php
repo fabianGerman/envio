@@ -6,11 +6,18 @@
                     {{ __('AGREGAR') }}
                 </h2>
             </a>
-            <a href="#">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <form method="POST" action="{{ route('archivo.exportar') }}">
+                @csrf
+                <input type="hidden" name="prestador" value="{{ request('prestador') }}">
+                <input type="hidden" name="prestacion" value="{{ request('prestacion') }}">
+                <input type="hidden" name="afiliado" value="{{ request('afiliado') }}">
+                <input type="hidden" name="periodo" value="{{ request('periodo') }}">
+                <input type="hidden" name="obrasocial" value="{{ request('obrasocial') }}">
+                <input type="hidden" name="usuario" value="{{ request('usuario') }}">
+                <x-jet-button class="ml-2">
                     {{ __('EXPORTAR') }}
-                </h2>
-            </a>
+                </x-jet-button>
+            </form>
         </div>
         
     </x-slot>
@@ -26,15 +33,15 @@
                             <!-- Primera fila -->
                             <div class="col-md-4">
                                 <label for="prestador" class="col-form-label">PRESTADOR</label>
-                                <input type="text" class="form-control" name="prestador" id="prestador" placeholder="">
+                                <input type="text" class="form-control" name="prestador" id="prestador" placeholder="" value="{{ request('prestador') }}">
                             </div>
                             <div class="col-md-4">
                                 <label for="prestacion" class="col-form-label">Nº PRESTACION</label>
-                                <input type="text" class="form-control" name="prestacion" id="prestacion" placeholder="">
+                                <input type="text" class="form-control" name="prestacion" id="prestacion" placeholder="" value="{{ request('prestacion') }}">
                             </div>
                             <div class="col-md-4">
                                 <label for="afiliado" class="col-form-label">AFILIADO</label>
-                                <input type="text" class="form-control" name="afiliado" id="afiliado" placeholder="">
+                                <input type="text" class="form-control" name="afiliado" id="afiliado" placeholder="" value="{{ request('afiliado') }}">
                             </div>
                         </div>
                     
@@ -42,15 +49,21 @@
                             <!-- Segunda fila -->
                             <div class="col-md-4">
                                 <label for="periodo" class="col-form-label">PERIODO</label>
-                                <input type="text" class="form-control" name="periodo" id="periodo" placeholder="">
+                                <input type="text" class="form-control" name="periodo" id="periodo" placeholder="" value="{{ request('periodo') }}">
                             </div>
                             <div class="col-md-4">
                                 <label for="obrasocial" class="col-form-label">OBRA SOCIAL</label>
-                                <input type="text" class="form-control" name="obrasocial" id="obrasocial" placeholder="">
+                                <input type="text" class="form-control" name="obrasocial" id="obrasocial" placeholder="" value="{{ request('obrasocial') }}">
                             </div>
+                            
                             <div class="col-md-4">
                                 <label for="usuario" class="col-form-label">USUARIO</label>
-                                <input type="text" class="form-control" name="usuario" id="usuario" placeholder="">
+                                @if(Auth::user()->rol_usuario != 3)
+                                    <input type="text" class="form-control" name="usuario" id="usuario" placeholder="" alue="{{ request('usuario') }}">
+                                @else
+                                    <input type="text" class="form-control" name="usuario" id="usuario" placeholder="" disabled>
+                                @endif
+                                
                             </div>
                         </div>
 
@@ -77,6 +90,7 @@
                     <table class="table-auto w-full text-center">
                         <thead>
                             <tr>
+                                <th class="px-4 py-2">USUARIO</th>
                                 <th class="px-4 py-2">AFILIADO</th>
                                 <th class="px-4 py-2">PRESTADOR</th>
                                 <th class="px-4 py-2">OBRA SOCIAL</th>
@@ -90,6 +104,7 @@
                         
                             @foreach ($lista as $item)
                                 <tr>
+                                    <td class="border px-4 py-2">{{ $item->USUARIO}}</td>
                                     <td class="border px-4 py-2">{{ $item->AFILIADO }}</td>
                                     <td class="border px-4 py-2">{{ $item->PRESTADOR }}</td>
                                     <td class="border px-4 py-2">{{ $item->OBRASOCIAL }}</td>

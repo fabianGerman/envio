@@ -44,14 +44,18 @@
 
             <div class="mt-4">
                 <x-jet-label for="estado" value="{{ __('Estado') }}" />
-                <x-jet-input id="estado" class="block mt-1 w-full" type="text" name="estado" value="{{ $usuario->estado }}" required />
+                <select class="block mt-1 w-full" name="estado" id="estado" value="{{ $usuario->estado }}">
+                    <option></option>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                  </select>
             </div>
-
+            <!--
             <div class="mt-4">
                 <x-jet-label for="rol" value="{{ __('Rol') }}" />
                 <x-jet-input id="rol" class="block mt-1 w-full" type="text" name="rol" value="{{ $usuario->rol }}" required />
             </div>
-
+            -->
             <div>
                 <x-jet-label for="documento" value="{{ __('Documento') }}" />
                 <x-jet-input id="documento" class="block mt-1 w-full" type="text" name="documento" value="{{ $persona->per_documento }}" required autofocus autocomplete="documento" />
@@ -61,7 +65,7 @@
                 <x-jet-label for="nombre" value="{{ __('Nombre') }}" />
                 <x-jet-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" value="{{ $persona->per_nombres }}" required autofocus autocomplete="nombre" />
             </div>
-
+            <!--
             <div>
                 <x-jet-label for="instituto" value="{{ __('Instituto') }}" />
                 <x-jet-input id="instituto" class="block mt-1 w-full" type="text" name="instituto" value="{{ $persona->per_instituto }}" required autofocus autocomplete="instituto" />
@@ -76,7 +80,7 @@
                 <x-jet-label for="telefono" value="{{ __('Telefono') }}" />
                 <x-jet-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" value="{{ $persona->per_telefono }}" required autofocus autocomplete="telefono" />
             </div>
-
+            -->
             <div class="mt-4">
                 <x-jet-label for="roles" value="{{ __('Rol') }}" />
                 <select name="roles" id="roles">

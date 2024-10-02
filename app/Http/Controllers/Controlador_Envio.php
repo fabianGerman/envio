@@ -97,13 +97,13 @@ class Controlador_Envio extends Controller
             $afiliado_agregar->save();
         }
 
-        $buscar_prestador = Prestador::where('prest_nombre',$prestador)->first();
+        $buscar_prestador = Prestador::where('prest_matricula',$prestador)->first();
         if($buscar_prestador == null){
             $prestador_agregar = new Prestador();
             $prestador_agregar->prest_matricula = $prestador;
             $prestador_agregar->save();
         }
-
+        //dd($buscar_prestador,$prestador);
         $buscar_obrasocial = ObraSocial::where('os_nombre',$obrasocial)->first();
         if($buscar_obrasocial == null){
             $obrasocial_agregar = new ObraSocial();
@@ -112,7 +112,7 @@ class Controlador_Envio extends Controller
         }
 
         $buscar_afiliado = Afiliado::where('af_nombres',$afiliado)->first();
-        $buscar_prestador = Prestador::where('prest_nombre',$prestador)->first();
+        $buscar_prestador = Prestador::where('prest_matricula',$prestador)->first();
         $buscar_obrasocial = ObraSocial::where('os_nombre',$obrasocial)->first();
 
         $envio_agregar = new Envio();
@@ -127,7 +127,7 @@ class Controlador_Envio extends Controller
 
         //return $this->listar();
         //return $this->generarPDF($envio_agregar->id);
-        return redirect()->route('envio.lista');
+        return redirect()->route('archivo.listar');
     }
 
 

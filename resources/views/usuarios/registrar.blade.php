@@ -39,14 +39,18 @@
 
             <div class="mt-4">
                 <x-jet-label for="estado" value="{{ __('Estado') }}" />
-                <x-jet-input id="estado" class="block mt-1 w-full" type="text" name="estado" :value="old('estado')" required autocomplete="estado"/>
+                <select class="block mt-1 w-full" name="estado" id="estado">
+                    <option></option>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                  </select>
             </div>
-
+            <!--
             <div class="mt-4">
                 <x-jet-label for="rol" value="{{ __('Rol') }}" />
                 <x-jet-input id="rol" class="block mt-1 w-full" type="text" name="rol" :value="old('rol')" required autocomplete="rol"/>
             </div>
-
+            -->
             <div class="mt-4">
                 <x-jet-label for="roles" value="{{ __('Rol') }}" />
                 <select name="roles" id="roles">
@@ -74,12 +78,12 @@
                 <x-jet-label for="nombre" value="{{ __('Nombre') }}" />
                 <x-jet-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required autofocus autocomplete="nombre" />
             </div>
-
+            <!--
             <div>
                 <x-jet-label for="instituto" value="{{ __('Instituto') }}" />
                 <x-jet-input id="instituto" class="block mt-1 w-full" type="text" name="instituto" :value="old('instituto')" required autofocus autocomplete="instituto" />
             </div>
-
+            
             <div>
                 <x-jet-label for="direccion" value="{{ __('Direccion') }}" />
                 <x-jet-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" :value="old('direccion')" required autofocus autocomplete="direccion" />
@@ -89,6 +93,7 @@
                 <x-jet-label for="telefono" value="{{ __('Telefono') }}" />
                 <x-jet-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required autofocus autocomplete="telefono" />
             </div>
+            -->
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-jet-label for="terms">

@@ -33,7 +33,7 @@ class Envio extends Model
                     'envios.created_at as FECHACREACION',
                     'envios.id',
                     'afiliados.af_nombres as AFILIADO',
-                    'prestadors.prest_nombre as PRESTADOR',
+                    'prestadors.prest_matricula as PRESTADOR',
                     'obra_socials.os_nombre as OBRASOCIAL',
                     'envios.env_periodo as PERIODO',
                     'envios.env_prestacion as PRESTACION',
@@ -52,7 +52,7 @@ class Envio extends Model
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
-                        'prestadors.prest_nombre as PRESTADOR',
+                        'prestadors.prest_matricula as PRESTADOR',
                         'obra_socials.os_nombre as OBRASOCIAL',
                         'envios.env_periodo as PERIODO',
                         'envios.env_prestacion as PRESTACION',
@@ -70,7 +70,7 @@ class Envio extends Model
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
-                        'prestadors.prest_nombre as PRESTADOR',
+                        'prestadors.prest_matricula as PRESTADOR',
                         'obra_socials.os_nombre as OBRASOCIAL',
                         'envios.env_periodo as PERIODO',
                         'envios.env_prestacion as PRESTACION',
@@ -125,7 +125,7 @@ class Envio extends Model
                     'envios.created_at as FECHACREACION',
                     'envios.id',
                     'afiliados.af_nombres as AFILIADO',
-                    'prestadors.prest_nombre as PRESTADOR',
+                    'prestadors.prest_matricula as PRESTADOR',
                     'obra_socials.os_nombre as OBRASOCIAL',
                     'envios.env_periodo as PERIODO',
                     'envios.env_prestacion as PRESTACION',
@@ -144,7 +144,7 @@ class Envio extends Model
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
-                        'prestadors.prest_nombre as PRESTADOR',
+                        'prestadors.prest_matricula as PRESTADOR',
                         'obra_socials.os_nombre as OBRASOCIAL',
                         'envios.env_periodo as PERIODO',
                         'envios.env_prestacion as PRESTACION',
@@ -162,7 +162,7 @@ class Envio extends Model
                         'envios.created_at as FECHACREACION',
                         'envios.id',
                         'afiliados.af_nombres as AFILIADO',
-                        'prestadors.prest_nombre as PRESTADOR',
+                        'prestadors.prest_matricula as PRESTADOR',
                         'obra_socials.os_nombre as OBRASOCIAL',
                         'envios.env_periodo as PERIODO',
                         'envios.env_prestacion as PRESTACION',
@@ -190,7 +190,7 @@ class Envio extends Model
                 'envios.created_at as FECHACREACION',
                 'envios.id',
                 'afiliados.af_nombres as AFILIADO',
-                'prestadors.prest_nombre as PRESTADOR',
+                'prestadors.prest_matricula as PRESTADOR',
                 'obra_socials.os_nombre as OBRASOCIAL',
                 'envios.env_periodo as PERIODO',
                 'envios.env_prestacion as PRESTACION',
@@ -212,7 +212,7 @@ class Envio extends Model
             $lista->where('envios.env_obrasocial',$buscar_obrasocial->id);
         }
         if($usuario != null){
-            $lista->where('envios.env_usuario',$buscar_usuario);
+            $lista->where('envios.env_usuario',$buscar_usuario->id);
         }
         return $lista->paginate(5);
     }

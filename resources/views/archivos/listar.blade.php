@@ -59,7 +59,7 @@
                             <div class="col-md-4">
                                 <label for="usuario" class="col-form-label">USUARIO</label>
                                 @if(Auth::user()->rol_usuario != 3)
-                                    <input type="text" class="form-control" name="usuario" id="usuario" placeholder="" alue="{{ request('usuario') }}">
+                                    <input type="text" class="form-control" name="usuario" id="usuario" placeholder="" value="{{ request('usuario') }}">
                                 @else
                                     <input type="text" class="form-control" name="usuario" id="usuario" placeholder="" disabled>
                                 @endif
@@ -67,10 +67,28 @@
                             </div>
                         </div>
 
+                        <
                         <div class="form-group row">
-                            <x-jet-button class="ml-2">
-                                {{ __('Buscar') }}
-                            </x-jet-button>
+                            <div class="col-md-4">
+                                <!--
+                                <label for="obrasocial" class="col-form-label">ESTADO</label>
+                                <select class="form-control" name="estado">
+                                    <option value="">Seleccione un estado</option>
+                                    <option value="Activo" {{ request('estado') == 'Activo' ? 'selected' : '' }}>Activo</option>
+                                    <option value="Caducado" {{ request('estado') == 'Caducado' ? 'selected' : '' }}>Caducado</option>
+                                </select>
+                                -->
+                            </div>
+                            <div class="col-md-4">
+                                
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <label for="obrasocial" class="col-form-label"> </label>
+                                <x-jet-button>
+                                    {{ __('Buscar') }}
+                                </x-jet-button>
+                            </div>
+                            
                         </div>
                     </form>
                 </div>
@@ -97,6 +115,7 @@
                                 <th class="px-4 py-2">PERIODO</th>
                                 <th class="px-4 py-2">Nª PRESTACION</th>
                                 <th class="px-4 py-2">FECHA DE CARGA</th>
+                                <th class="px-4 py-2">ESTADO</th>
                                 <th class="px-4 py-2">DOCUMENTACION</th>
                             </tr>
                         </thead>
@@ -111,7 +130,18 @@
                                     <td class="border px-4 py-2">{{ $item->PERIODO }}</td>
                                     <td class="border px-4 py-2">{{ $item->PRESTACION }}</td>
                                     <td class="border px-4 py-2">{{ $item->FECHACREACION }}</td>
-                                    <td class="border px-4 py-2"><a href="{{ $item->DOCUMENTACION }}" target="_blank">Ver Documentacion</a></td>
+                                    @if (request('estado')==null)
+                                        <td class="border px-4 py-2">
+                                            @if (\Carbon\Carbon::parse($item->FECHACREACION)->diffInHours(now()) >= 24)
+                                                <span class="text-red-500">Caducado</span>
+                                            @else
+                                                <span class="text-green-500">Activo</span>
+                                            @endif
+                                        </td> 
+                                    @else
+                                        <td class="border px-4 py-2">{{ $item->estado }}</td>
+                                    @endif
+                                        <td class="border px-4 py-2"><a href="{{ $item->DOCUMENTACION }}" target="_blank">Ver Documentacion</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Envio;
+use Carbon\Carbon;
 
 class Controlador_Archivo extends Controller
 {
@@ -25,6 +26,7 @@ class Controlador_Archivo extends Controller
         $periodo = $request->input('periodo');
         $obrasocial = $request->input('obrasocial');
         $usuario = $request->input('usuario');
+        $estado = $request->input('estado'); 
 
         if($prestador == null && $prestacion == null && $afiliado == null && $periodo == null && $obrasocial == null && $usuario == null){
             
@@ -32,7 +34,22 @@ class Controlador_Archivo extends Controller
         }else{
             
             $lista = Envio::filtros_envio($prestador,$prestacion,$afiliado,$periodo,$obrasocial,$usuario);
-            
+            if ($estado !== null) {
+                // Filtrar lista según el estado (Activo o Caducado)
+                /*
+                $lista = $lista->filter(function($envio) use ($estado) {
+                    $esActivo = \Carbon\Carbon::parse($envio->FECHACREACION)->diffInHours(now()) < 24;
+                    return ($estado === 'Activo' && $esActivo) || ($estado === 'Caducado' && !$esActivo);
+                });*/
+
+               
+                foreach ($lista as $key => $value) {
+                    $e = \Carbon\Carbon::parse($value->FECHACREACION)->diffInHours(now()) < 24;
+                    if(($estado === 'Activo' && $e) || ($estado === 'Caducado' && !$e)){
+                        $value->estado = $estado;
+                    }
+                }
+            }
             return view('archivos.listar',compact('lista'));
         }
     }
@@ -60,12 +77,14 @@ class Controlador_Archivo extends Controller
             "Expires" => "0"
         );
 
-        $columns = ['USUARIO', 'AFILIADO', 'PRESTADOR', 'OBRA SOCIAL', 'PERIODO', 'Nº PRESTACION', 'FECHA DE CARGA', 'URL'];
+        $columns = ['USUARIO', 'AFILIADO', 'PRESTADOR', 'OBRA SOCIAL', 'PERIODO', 'Nº PRESTACION', 'FECHA DE CARGA', 'ESTADO', 'URL'];
         
         $callback = function () use ($lista, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns, ';');
             foreach ($lista as $l) {
+                $estado = \Carbon\Carbon::parse($l->FECHACREACION)->diffInHours(now()) >= 24 ? 'Caducado' : 'Activo';
+
                 $row = [
                     $l->USUARIO,
                     $l->AFILIADO,
@@ -74,6 +93,7 @@ class Controlador_Archivo extends Controller
                     $l->PERIODO,
                     $l->PRESTACION,
                     $l->FECHACREACION,
+                    $estado,
                     $l->DOCUMENTACION
                 ];
                 fputcsv($file, $row, ';');

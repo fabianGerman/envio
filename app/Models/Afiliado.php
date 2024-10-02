@@ -22,7 +22,8 @@ class Afiliado extends Model
                 'afiliados.af_numero as NUMERO',
                 'afiliados.af_cuil as CUIL',
                 'afiliados.af_nombres as NOMBRE'
-            );
+            )
+            ->orderBy('af_nombres','asc');
             
         // Si el rol del usuario autenticado NO es 1, aplica la condición del where
         if (Auth::user()->rol_usuario != 1) {

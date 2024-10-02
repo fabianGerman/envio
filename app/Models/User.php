@@ -121,16 +121,18 @@ class User extends Authenticatable
     }
 
     public static function buscar_usuario($param){
-        return User::where('name',$param)
-            ->orWhere('email',$param)
-            ->orWhere('id',$param)
+        return User::join('rols', 'users.rol_usuario', '=', 'rols.id')
+            ->join('areas', 'users.area_usuario', '=', 'areas.id')
             ->select(
                 'users.id as ID',
-                'users.name as USUARIO',
-                'users.email as CORREO_ELECTRONICO',
-                'users.estado as ESTADO',
-                'users.rol as ROL',
+                'name as USUARIO',
+                'email as CORREO_ELECTRONICO',
+                'estado as ESTADO',
+                'rols.rol_nombre as ROLES',
+                'areas.area_nombre as AREA'
             )
+            ->where('name',$param)
+            ->orWhere('email',$param)
             ->paginate(5);
     }
 

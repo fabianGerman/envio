@@ -10,6 +10,7 @@ module.exports = {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        './node_modules/@material-tailwind/html/components/**/*.{js,ts,jsx,tsx}', // Para HTML
     ],
 
     theme: {

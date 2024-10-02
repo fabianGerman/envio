@@ -131,6 +131,7 @@ class Controlador_Usuario extends Controller
         $buscar = $request->input('search');
         if($buscar !== null){
             $lista = User::buscar_usuario($buscar);
+            
             return view('usuarios.listar',compact('lista'));
         }else{
             return redirect()->route('usuario.listar');

@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <a href="{{ route('envio.index') }}">
@@ -67,7 +68,7 @@
                             </div>
                         </div>
 
-                        <
+                        
                         <div class="form-group row">
                             <div class="col-md-4">
                                 <!--
@@ -117,11 +118,14 @@
                                 <th class="px-4 py-2">FECHA DE CARGA</th>
                                 <th class="px-4 py-2">ESTADO</th>
                                 <th class="px-4 py-2">DOCUMENTACION</th>
+                                <th class="px-4 py-2">COMPORBANTE</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                         
                             @foreach ($lista as $item)
+                                
                                 <tr>
                                     <td class="border px-4 py-2">{{ $item->USUARIO}}</td>
                                     <td class="border px-4 py-2">{{ $item->AFILIADO }}</td>
@@ -141,7 +145,13 @@
                                     @else
                                         <td class="border px-4 py-2">{{ $item->estado }}</td>
                                     @endif
-                                        <td class="border px-4 py-2"><a href="{{ $item->DOCUMENTACION }}" target="_blank">Ver Documentacion</a></td>
+
+                                    <td class="border px-4 py-2">
+                                        <a href="{{ $item->DOCUMENTACION }}" target="_blank">Ver Documentacion</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('envio.comprobante',['id'=>$item->id]) }}" target="_blank">Ver comprobante</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

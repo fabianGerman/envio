@@ -126,7 +126,7 @@ class Controlador_Envio extends Controller
         $envio_agregar->save();
 
         //return $this->listar();
-        //return $this->generarPDF($envio_agregar->id);
+        $this->generarPDF($envio_agregar->id);
         return redirect()->route('archivo.listar');
     }
 
@@ -191,7 +191,7 @@ class Controlador_Envio extends Controller
                 return response()->json(['error' => 'Envio no encontrado'], 404);
             }
             
-       
+      
         // Genera el PDF desde una vista (ej: envio_pdf)
         
         $pdf = PDF::loadView('envios.archivo', compact('envio'));
@@ -206,8 +206,8 @@ class Controlador_Envio extends Controller
         $pdfUrl = asset('storage/pdfs/' . $pdfFileName);
 
         // Actualiza el registro en la base de datos con la URL del PDF (opcional)
-        $envio->env_documento = $pdfUrl;
-        $envio->save();
+        //$envio->env_documento = $pdfUrl;
+        //$envio->save();
         // Opción 1: Mostrar el PDF en el navegador
         return $pdf->stream('envio.pdf');
 

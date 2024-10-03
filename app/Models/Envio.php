@@ -82,6 +82,36 @@ class Envio extends Model
         return $lista;
     }
 
+    public static function listar_envios2(){
+        $usuario = User::where('id',Auth::id())->first();
+
+        $query = Envio::join('afiliados','afiliados.id','=','envios.env_afiliado')
+            ->join('prestadors','prestadors.id','=','envios.env_prestador')
+            ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
+            ->join('users','users.id','=','envios.env_usuario')
+            ->select(
+                'users.name as USUARIO',
+                'envios.created_at as FECHACREACION',
+                'envios.id',
+                'afiliados.af_nombres as AFILIADO',
+                'prestadors.prest_matricula as PRESTADOR',
+                'obra_socials.os_nombre as OBRASOCIAL',
+                'envios.env_periodo as PERIODO',
+                'envios.env_prestacion as PRESTACION',
+                'envios.env_documento as DOCUMENTACION'
+            );
+        
+        if($usuario->rol_usuario == 1){
+
+        }elseif($usuario->rol_usuario == 2){
+            $query->where('users.area_usuario',$usuario->area_usuario);
+        }else{
+            $query->where('users.id',$usuario->id);
+        }
+
+        return $query->get(); 
+    }
+
     public static function agregar_envio($prestador,$usuario,$afiliado,$obrasocial,$periodo,$prestacion){
         return Envio::insert([
             'env_prestador' => $prestador,
@@ -111,72 +141,48 @@ class Envio extends Model
     }
 
 
-    public static function buscar_envio($param){
-        $usuario = User::where('id',Auth::id())
-        ->first();
-
-        if($usuario->rol_usuario == 1){
-            $lista =  Envio::join('afiliados','afiliados.id','=','envios.env_afiliado')
-                ->join('prestadors','prestadors.id','=','envios.env_prestador')
-                ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
-                ->join('users','users.id','=','envios.env_usuario')
-                ->select(
-                    'users.name as USUARIO',
-                    'envios.created_at as FECHACREACION',
-                    'envios.id',
-                    'afiliados.af_nombres as AFILIADO',
-                    'prestadors.prest_matricula as PRESTADOR',
-                    'obra_socials.os_nombre as OBRASOCIAL',
-                    'envios.env_periodo as PERIODO',
-                    'envios.env_prestacion as PRESTACION',
-                    'envios.env_documento as DOCUMENTACION'
-                )
-                ->paginate(5);
-        }else{
-            if($usuario->rol_usuario == 2){
-                $lista =  Envio::where('users.area_usuario',$usuario->area_usuario)
-                    ->join('afiliados','afiliados.id','=','envios.env_afiliado')
-                    ->join('prestadors','prestadors.id','=','envios.env_prestador')
-                    ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
-                    ->join('users','users.id','=','envios.env_usuario')
-                    ->select(
-                        'users.name as USUARIO',
-                        'envios.created_at as FECHACREACION',
-                        'envios.id',
-                        'afiliados.af_nombres as AFILIADO',
-                        'prestadors.prest_matricula as PRESTADOR',
-                        'obra_socials.os_nombre as OBRASOCIAL',
-                        'envios.env_periodo as PERIODO',
-                        'envios.env_prestacion as PRESTACION',
-                        'envios.env_documento as DOCUMENTACION'
-                    )
-                    ->paginate(5);
-            }else{
-                $lista =  Envio::where('users.id',$usuario->id)
-                    ->join('afiliados','afiliados.id','=','envios.env_afiliado')
-                    ->join('prestadors','prestadors.id','=','envios.env_prestador')
-                    ->join('obra_socials','obra_socials.id','=','envios.env_obrasocial')
-                    ->join('users','users.id','=','envios.env_usuario')
-                    ->select(
-                        'users.name as USUARIO',
-                        'envios.created_at as FECHACREACION',
-                        'envios.id',
-                        'afiliados.af_nombres as AFILIADO',
-                        'prestadors.prest_matricula as PRESTADOR',
-                        'obra_socials.os_nombre as OBRASOCIAL',
-                        'envios.env_periodo as PERIODO',
-                        'envios.env_prestacion as PRESTACION',
-                        'envios.env_documento as DOCUMENTACION'
-                    )
-                    ->paginate(5);
-            }
+    public static function buscar_envio($param) {
+        // Obtener usuario autenticado
+        $usuario = User::find(Auth::id());
+    
+        // Crear la consulta base
+        $query = Envio::join('afiliados', 'afiliados.id', '=', 'envios.env_afiliado')
+            ->join('prestadors', 'prestadors.id', '=', 'envios.env_prestador')
+            ->join('obra_socials', 'obra_socials.id', '=', 'envios.env_obrasocial')
+            ->join('users', 'users.id', '=', 'envios.env_usuario')
+            ->select(
+                'users.name as USUARIO',
+                'envios.created_at as FECHACREACION',
+                'envios.id',
+                'afiliados.af_nombres as AFILIADO',
+                'prestadors.prest_matricula as PRESTADOR',
+                'obra_socials.os_nombre as OBRASOCIAL',
+                'envios.env_periodo as PERIODO',
+                'envios.env_prestacion as PRESTACION',
+                'envios.env_documento as DOCUMENTACION'
+            );
+    
+        // Aplicar filtros según el rol del usuario
+        switch ($usuario->rol_usuario) {
+            case 1:
+                // Administrador: No aplica ningún filtro adicional
+                break;
+            case 2:
+                // Filtrar por área de usuario
+                $query->where('users.area_usuario', $usuario->area_usuario);
+                break;
+            default:
+                // Filtrar por ID del usuario
+                $query->where('users.id', $usuario->id);
+                break;
         }
-
-        return $lista;
+    
+        // Devolver los resultados paginados
+        return $query->paginate(5);
     }
 
     public static function filtros_envio($prestador,$prestacion,$afiliado,$periodo,$obrasocial,$usuario){
-
+        
         $buscar_prestador = Prestador::where('prest_matricula', intval($prestador))->first();
         $buscar_afiliado = Afiliado::where('af_nombres', $afiliado)->first();
         $buscar_obrasocial = ObraSocial::where('os_nombre', $obrasocial)->first();
@@ -214,6 +220,7 @@ class Envio extends Model
         if($usuario != null){
             $lista->where('envios.env_usuario',$buscar_usuario->id);
         }
+
         return $lista->paginate(5);
     }
 
